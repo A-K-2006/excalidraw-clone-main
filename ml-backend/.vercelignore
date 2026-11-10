@@ -1,0 +1,16 @@
+# Ignore heavy custom GAN ONNX model to stay under Vercel's 250MB serverless upload limit
+checkpoints/sketch_enhancer.onnx
+
+# Ignore local virtual environment
+.venv/
+venv/
+__pycache__/
+*.pyc
+
+# Ignore training datasets, notebooks, and temporary files
+data/
+training/
+temp/
+tests/
+test_handwriting_system.py
+test_ml_system.py

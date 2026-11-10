@@ -1,0 +1,25 @@
+# ── Core API ────────────────────────────────────────────────────────────────
+fastapi
+uvicorn[standard]
+python-multipart
+python-dotenv
+
+# ── Image processing ─────────────────────────────────────────────────────────
+Pillow
+numpy>=1.26.4
+opencv-python-headless>=4.9.0.80
+
+# ── ONNX ML model inference (Informative Drawings - ~17MB, CPU-only) ─────────
+# Lightweight — no PyTorch/CUDA required, builds fast on Render free tier
+onnxruntime>=1.17.0
+
+# ── Gemini AI (fallback enhancer + math solver + handwriting OCR) ─────────────
+google-generativeai
+requests
+
+# ── Handwriting recognition ───────────────────────────────────────────────────
+# NOTE: easyocr is disabled in production config to prevent OOM. Move to local setup if running locally.
+# easyocr
+
+# ── Math solver ──────────────────────────────────────────────────────────────
+sympy

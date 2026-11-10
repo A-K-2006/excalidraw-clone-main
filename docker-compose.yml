@@ -1,0 +1,51 @@
+version: '3.8'
+
+services:
+  # Backend Service
+  backend:
+    build:
+      context: ./backend
+      dockerfile: Dockerfile
+    container_name: backend_service
+    ports:
+      - "5000:5000"
+    volumes:
+      - ./backend/src:/usr/src/app/src # Mount src for live-reloading
+    env_file:
+      - ./backend/.env
+    restart: unless-stopped
+
+  # ML Backend Service
+  ml-backend:
+    build:
+      context: ./ml-backend
+      dockerfile: Dockerfile
+    container_name: ml_backend_service
+    ports:
+      - "8000:8000"
+    volumes:
+      - ./ml-backend/app:/app/app # Mount app for live-reloading
+    environment:
+      PORT: 8000
+    restart: unless-stopped
+
+  # Frontend Service
+  frontend:
+    build:
+      context: ./frontend
+      dockerfile: Dockerfile
+    container_name: frontend_service
+    ports:
+      - "3000:3000"
+    volumes:
+      - ./frontend:/app # Mount entire folder for live-reloading
+      - /app/node_modules
+      - /app/.next
+    environment:
+      # This is how the frontend talks to the backend inside Docker
+      NEXT_PUBLIC_API_URL: http://backend:5000
+      NEXT_PUBLIC_ML_API_URL: http://ml-backend:8000
+    depends_on:
+      - backend
+      - ml-backend
+    restart: unless-stopped
